@@ -77,5 +77,3 @@ def test_login_form(driver, email, password, expected_message):
             "Не удалось открыть вкладку 'Курсы, на которые вы зачислены'"
         # assert "Администрирование - Школа Брейни" in driver.title, "Заголовок страницы не соответствует ожидаемому"
 
-#Проверка гит
-#Next commit
