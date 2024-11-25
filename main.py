@@ -78,3 +78,4 @@ def test_login_form(driver, email, password, expected_message):
         # assert "Администрирование - Школа Брейни" in driver.title, "Заголовок страницы не соответствует ожидаемому"
 
 #Проверка гит
+#Next commit
