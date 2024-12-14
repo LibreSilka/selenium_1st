@@ -6,6 +6,10 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
+
+service = Service()
+driver = webdriver.Chrome(service=service)
+
 if not os.path.exists("screenshots"):
     os.makedirs("screenshots")
 
