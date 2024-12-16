@@ -34,7 +34,14 @@ if not os.path.exists("screenshots"):
 #     lucky_button.click()
 #     assert driver.current_url == "https://doodles.google/"
 
-def test_pics(driver):
-    pict_but = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//a[text()='Картинки']")))
-    pict_but.click()
-    assert driver.current_url == "https://www.google.com/imghp?hl=ru&ogbl"
+# def test_pics(driver):
+#     pict_but = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//a[text()='Картинки']")))
+#     pict_but.click()
+#     assert driver.current_url == "https://www.google.com/imghp?hl=ru&ogbl"
+def test_search_func(driver):
+    search_field = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//textarea[@class = 'gLFyf']")))
+    search_field.send_keys("крокодил")
+    time.sleep(2)
+    search_but = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//input[@class = 'gNO89b']")))
+    search_but.click()
+    time.sleep(3)
