@@ -1,6 +1,8 @@
 import pytest
 import re
-
+from selenium import webdriver
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from selenium.webdriver.edge.service import Service
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     print(f"Тест идет: {item.name}")
@@ -26,4 +28,10 @@ def pytest_runtest_makereport(item, call):
                 extra.append(pytest_html.extras.image(screenshot_path))
                 report.extra = extra
 
-# fef
+@pytest.fixture
+def driver():
+    service = Service(EdgeChromiumDriverManager().install())
+    driver = webdriver.Edge(service=service)
+    driver.implicitly_wait(10)
+    driver.get('https://google.com')
+    yield driver
