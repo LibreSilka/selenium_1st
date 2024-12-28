@@ -5,7 +5,9 @@ from selenium.webdriver.edge.service import Service
 @pytest.fixture
 def driver():
     service = Service(EdgeChromiumDriverManager().install())
-    driver = webdriver.Edge(service=service)
+    options = webdriver.EdgeOptions()
+    options.add_argument("--headless")
+    driver = webdriver.Edge(service=service, options=options)
     driver.implicitly_wait(10)
     driver.get('https://google.com')
     yield driver
