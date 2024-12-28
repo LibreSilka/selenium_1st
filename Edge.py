@@ -5,15 +5,16 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 import os
 
-# Создание папки для скриншотов, если она не существует
-if not os.path.exists("screenshots"):
-    os.makedirs("screenshots")
+# Создаем папку для скриншотов, если ее нет
+SCREENSHOTS_DIR = "screenshots"
+if not os.path.exists(SCREENSHOTS_DIR):
+    os.makedirs(SCREENSHOTS_DIR)
 
 
 @allure.feature("Google News")
-@allure.story("Поиск новостей")
-@allure.title("Новости")
-@allure.description("Тест выполняет переход по ссылке новости'.")
+@allure.story("Переход в раздел новостей")
+@allure.title("Тест перехода в Google News")
+@allure.description("Проверяет переход на страницу новостей.")
 def test_news(driver):
     with allure.step("Нажатие iframe"):
         apps_button = WebDriverWait(driver, 10).until(
@@ -36,9 +37,9 @@ def test_news(driver):
 
 
 @allure.feature("Google Lucky")
-@allure.story("Нажатие на Lucky Button")
-@allure.title("Lucky_Button")
-@allure.description("Тест выполняет переход по ссылке Lucky_Button'.")
+@allure.story("Тест кнопки 'Мне повезет'")
+@allure.title("Тест кнопки 'Мне повезет'")
+@allure.description("Проверяет переход по кнопке 'Мне повезет' на главной странице Google.")
 def test_lucky_button(driver):
     lucky_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "/html/body/div[1]/div["
                                                                                         "3]/form/div[1]/div[1]/div["
@@ -48,10 +49,10 @@ def test_lucky_button(driver):
     assert driver.current_url == "https://doodles.google/", "Не загрузил страницу - тебе повезет"
 
 
-@allure.feature("Google Картинки")
-@allure.story("Картинки")
-@allure.title("Картинки")
-@allure.description("Тест выполняет переход по ссылке Картинки'.")
+@allure.feature("Google Images")
+@allure.story("Переход в раздел 'Картинки'")
+@allure.title("Тест перехода в Google Картинки")
+@allure.description("Проверяет, что переход на страницу Google Картинки работает корректно.")
 def test_pics(driver):
     pict_but = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//a[text()='Картинки']")))
     pict_but.click()
@@ -60,9 +61,9 @@ def test_pics(driver):
 
 
 @allure.feature("Google Search")
-@allure.story("Поиск информации о 'крокодил'")
-@allure.title("Поиск изображений")
-@allure.description("Тест выполняет поиск слова 'крокодил' и открывает раздел 'Картинки'.")
+@allure.story("Поиск информации")
+@allure.title("Тест поиска и перехода в раздел 'Картинки'")
+@allure.description("Выполняет поиск слова 'крокодил' и проверяет работу раздела 'Картинки'.")
 def test_search_func(driver):
     with allure.step("Открытие поискового поля"):
         search_field = WebDriverWait(driver, 10).until(
@@ -83,20 +84,20 @@ def test_search_func(driver):
         allure.attach.file(screenshot_path, name="Скриншот результата", attachment_type=allure.attachment_type.PNG)
 
 
-@allure.feature("Pics download")
-@allure.story("Скачивание изображения")
-@allure.title("Скачивание Изоб")
-@allure.description("Тест выполняет скачивание первой картинки в поиске'.")
+@allure.feature("Google Images")
+@allure.story("Прокрутка страницы с изображениями")
+@allure.title("Тест скролла изображений")
+@allure.description("Проверяет, что можно прокрутить страницу с изображениями.")
 def test_scroll_image(driver):
     with allure.step("Сделать поиск крокодила"):
         search_box = driver.find_element("name", 'q')
         search_box.send_keys('crocodile')
-        search_box.send_keys(Keys.RETURN)  # Press Enter to perform the search
+        search_box.send_keys(Keys.RETURN)
         time.sleep(5)
     with allure.step("Переход в раздел 'Картинки'"):
         pics_but = WebDriverWait(driver, 10).until(EC.element_to_be_clickable(("xpath", "//div[text() = 'Картинки']")))
         pics_but.click()
     with allure.step("Scroll"):
-        for _ in range(3):  # Количество прокруток
-            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")  # Скроллим вниз
+        for _ in range(3):
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(2)
